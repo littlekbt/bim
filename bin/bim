@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require 'bundler/setup'
+require 'bim'
+
+begin
+  Bim::CLI.start
+rescue ::Bim::UnsetHostEnvironmentError
+  puts({ 'error' => 'not exist BIGIP_HOST environment variable' }.to_json)
+rescue ::Bim::UnsetUserIDEnvironmentError
+  puts({ 'error' => 'not exist BIGIP_USER_ID environment variable' }.to_json)
+rescue ::Bim::UnsetPasswordEnvironmentError
+  puts({ 'error' => 'not exist BIGIP_PASSWD environment variable' }.to_json)
+rescue ::Bim::UnauthorizedError
+  puts({ 'error' => 'unauthorized' }.to_json)
+end
