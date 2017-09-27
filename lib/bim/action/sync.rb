@@ -9,11 +9,11 @@ module Bim
       FAILOVER_STATE_PATH = '/mgmt/tm/cm/failoverStatus'.freeze
 
       class << self
-        def sync!(dest)
+        def sync!(dest, overwrite: false)
           msg = "you want to sync #{BIGIP_HOST} configuration to #{dest}? [y|n]"
           return { 'message' => "cancel sync #{BIGIP_HOST} to #{dest}" } unless yes_or_no?(msg)
           uri = URI.join(Bim::BASE_URL, Bim::Action::Sync::SYNC_PATH)
-          j = { "command": 'run', "utilCmdArgs": "config-sync to-group #{dest}" }
+          j = { "command": 'run', "utilCmdArgs": "config-sync #{'force-full-load-push ' if overwrite}to-group #{dest}" }
           req = request(uri, Bim::AUTH, 'application/json', 'POST', j.to_json)
           http(uri).request(req).body
         end
