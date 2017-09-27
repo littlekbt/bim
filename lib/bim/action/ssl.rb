@@ -91,7 +91,7 @@ module Bim
           JSON.parse(vs_list)['items'].each do |vs|
             next if test && vs['name'] != Bim::TEST_VS
 
-            names = JSON.parse(profiles(vs['profilesReference']['link']))['items'].map { |p| p['name'] }
+            names = JSON.parse(profiles_items(vs['profilesReference']['link']))['items'].map { |p| p['name'] }
 
             next unless names.include?(old_profilename)
             # can not update only diff.
@@ -109,6 +109,11 @@ module Bim
         end
 
         private
+
+        def profiles_items(link)
+          uri = URI.parse(link.sub('localhost', BIGIP_HOST))
+          get_body(uri)
+        end
 
         def update_profiles(link, names)
           uri = URI.parse(link.sub('localhost', BIGIP_HOST))
