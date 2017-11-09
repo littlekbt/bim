@@ -1,4 +1,4 @@
-[![Build Status(https://travis-ci.org/littlekbt/bim.svg?branch=master)]](https://travis-ci.org/littlekbt/bim)
+[![Build Status](https://travis-ci.org/littlekbt/bim.svg?branch=master)](https://travis-ci.org/littlekbt/bim)
 
 # Bim
 
