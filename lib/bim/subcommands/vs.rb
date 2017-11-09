@@ -1,7 +1,7 @@
 module Bim
   module Subcommands
-    # VS class defines subcommands
-    class VS < Thor
+    # Vs class defines subcommands
+    class Vs < Thor
       desc(
         'list',
         'output virtual server info list'

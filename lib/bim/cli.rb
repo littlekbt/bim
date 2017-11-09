@@ -4,19 +4,11 @@ require 'bim/subcommands'
 module Bim
   # CLI class is import subcommands
   class CLI < Thor
-    desc 'meta [Subcommand]', "Subcommands: #{Bim::Subcommands::Meta.instance_methods(false).join(',')}"
-    subcommand 'meta', Bim::Subcommands::Meta
-
-    desc 'sync [Subcommand]', "Subcommands: #{Bim::Subcommands::Sync.instance_methods(false).join(',')}"
-    subcommand 'sync', Bim::Subcommands::Sync
-
-    desc 'ssl [Subcommand]', "Subcommands: #{Bim::Subcommands::SSL.instance_methods(false).join(',')}"
-    subcommand 'ssl', Bim::Subcommands::SSL
-
-    desc 'vs [Subcommand]', "Subcommands: #{Bim::Subcommands::VS.instance_methods(false).join(',')}"
-    subcommand 'vs', Bim::Subcommands::VS
-
-    desc 'node [Subcommand]', "Subcommands: #{Bim::Subcommands::Node.instance_methods(false).join(',')}"
-    subcommand 'node', Bim::Subcommands::Node
+    # define under subcommands files as subcommands
+    Dir.glob(::Pathname.new(__dir__) + 'subcommands/*').map{|fp| File.basename(fp).split('.rb')[0]}.each do |cmd|
+      klass = Object.const_get("Bim").const_get("Subcommands").const_get(cmd.capitalize)
+      desc "#{cmd} [Subcommand]", "Subcommands: #{klass.instance_methods(false).join(',')}"
+      subcommand cmd, klass
+    end
   end
 end
