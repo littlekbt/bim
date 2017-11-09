@@ -75,7 +75,7 @@ module Bim
         .to_json
     end
 
-    def post(uri, json)
+    def post(uri, _json)
       req = request(uri, Bim::AUTH, 'application/json', 'POST', j)
       http(uri).request(req).body
     end

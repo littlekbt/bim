@@ -18,7 +18,7 @@ module Bim
 
       class << self
         def bundles
-          cond = Proc.new { |item| item['isBundle'] == 'true' }
+          cond = proc { |item| item['isBundle'] == 'true' }
           select_map(CRT_FILES_URI, cond) do |item|
             { 'name' => item['name'].split('.')[0...-1].join('.') }
           end

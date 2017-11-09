@@ -10,7 +10,7 @@ module Bim
       class << self
         def ls
           map(NODE_URI) do |item|
-            {name: item['name'], address: item['address']}
+            { name: item['name'], address: item['address'] }
           end
         end
 
@@ -21,7 +21,7 @@ module Bim
         def create(name, address)
           post(
             NODE_URI,
-            {'name' => name, 'address' => address}.to_json
+            { 'name' => name, 'address' => address }.to_json
           )
         end
 
