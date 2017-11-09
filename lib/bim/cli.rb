@@ -15,5 +15,8 @@ module Bim
 
     desc 'vs [Subcommand]', "Subcommands: #{Bim::Subcommands::VS.instance_methods(false).join(',')}"
     subcommand 'vs', Bim::Subcommands::VS
+
+    desc 'node [Subcommand]', "Subcommands: #{Bim::Subcommands::Node.instance_methods(false).join(',')}"
+    subcommand 'node', Bim::Subcommands::Node
   end
 end

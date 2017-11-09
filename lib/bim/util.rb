@@ -36,6 +36,8 @@ module Bim
               Net::HTTP::Post.new(uri)
             when 'PATCH'
               Net::HTTP::Patch.new(uri)
+            when 'DELETE'
+              Net::HTTP::Delete.new(uri)
             end
 
       req['Content-Type'] = content_type
