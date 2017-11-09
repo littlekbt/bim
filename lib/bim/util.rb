@@ -36,6 +36,8 @@ module Bim
               Net::HTTP::Post.new(uri)
             when 'PATCH'
               Net::HTTP::Patch.new(uri)
+            when 'DELETE'
+              Net::HTTP::Delete.new(uri)
             end
 
       req['Content-Type'] = content_type
@@ -48,6 +50,34 @@ module Bim
     def yes_or_no?(msg)
       print msg
       STDIN.gets.chomp.match?(/^[yY]/)
+    end
+
+    def select_map(uri, select_block, &map_block)
+      JSON
+        .parse(get_body(uri))['items']
+        .select(&select_block)
+        .map(&map_block)
+        .to_json
+    end
+
+    def map(uri, &block)
+      JSON
+        .parse(get_body(uri))['items']
+        .map(&block)
+        .to_json
+    end
+
+    def specify(uri, &block)
+      JSON
+        .parse(get_body(uri))['items']
+        .select(&block)
+        .first
+        .to_json
+    end
+
+    def post(uri, _json)
+      req = request(uri, Bim::AUTH, 'application/json', 'POST', j)
+      http(uri).request(req).body
     end
 
     def vs_list

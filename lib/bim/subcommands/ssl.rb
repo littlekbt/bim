@@ -1,7 +1,7 @@
 module Bim
   module Subcommands
-    # SSL class defines subcommands
-    class SSL < Thor
+    # Ssl class defines subcommands
+    class Ssl < Thor
       desc(
         'bundles',
         'output bundle certificat files info'

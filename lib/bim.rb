@@ -1,7 +1,6 @@
-require 'bim/version'
-require 'bim/cli'
-require 'json'
 require 'base64'
+require 'json'
+require 'bim/version'
 
 module Bim
   BIGIP_HOST  = ENV['BIGIP_HOST']
@@ -17,3 +16,5 @@ module Bim
   class UnsetPasswordEnvironmentError < UnsetEnvironmentError; end
   class UnauthorizedError < StandardError; end
 end
+
+require 'bim/cli'

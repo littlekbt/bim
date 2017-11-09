@@ -14,8 +14,7 @@ module Bim
           return { 'message' => "cancel sync #{BIGIP_HOST} to #{dest}" } unless yes_or_no?(msg)
           uri = URI.join(Bim::BASE_URL, Bim::Action::Sync::SYNC_PATH)
           j = { "command": 'run', "utilCmdArgs": "config-sync #{'force-full-load-push ' if overwrite}to-group #{dest}" }
-          req = request(uri, Bim::AUTH, 'application/json', 'POST', j.to_json)
-          http(uri).request(req).body
+          post(uri, j.to_json)
         end
 
         def state
