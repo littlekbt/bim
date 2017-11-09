@@ -12,7 +12,7 @@ module Bim
 
       desc(
         'device_groups',
-        'outpu device group'
+        'output device group'
       )
       def device_groups
         puts Bim::Action::Meta.device_groups

@@ -52,6 +52,34 @@ module Bim
       STDIN.gets.chomp.match?(/^[yY]/)
     end
 
+    def select_map(uri, select_block, &map_block)
+      JSON
+        .parse(get_body(uri))['items']
+        .select(&select_block)
+        .map(&map_block)
+        .to_json
+    end
+
+    def map(uri, &block)
+      JSON
+        .parse(get_body(uri))['items']
+        .map(&block)
+        .to_json
+    end
+
+    def specify(uri, &block)
+      JSON
+        .parse(get_body(uri))['items']
+        .select(&block)
+        .first
+        .to_json
+    end
+
+    def post(uri, json)
+      req = request(uri, Bim::AUTH, 'application/json', 'POST', j)
+      http(uri).request(req).body
+    end
+
     def vs_list
       uri = URI.join(BASE_URL, VS_PATH)
       get_body(uri)

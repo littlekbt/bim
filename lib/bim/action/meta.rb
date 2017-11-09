@@ -9,27 +9,21 @@ module Bim
 
       class << self
         def actives
-          uri = URI.join(Bim::BASE_URL, Bim::Action::Meta::DEVICE_PATH)
-          JSON
-            .parse(get_body(uri))['items']
-            .select { |item| item['failoverState'] == 'active' }
-            .inject([]) do |infos, item|
-              infos.push(hostname: item['hostname'], ip: item['managementIp'])
-            end.to_json
+          cond = Proc.new { |item| item['failoverState'] == 'active' }
+          select_map(URI.join(Bim::BASE_URL, Bim::Action::Meta::DEVICE_PATH), cond) do |item|
+            { hostname: item['hostname'], ip: item['managementIp'] }
+          end
         end
 
         def device_groups
-          uri = URI.join(Bim::BASE_URL, Bim::Action::Meta::DEVICE_GROUP_PATH)
-          JSON
-            .parse(get_body(uri))['items']
-            .select { |item| item['type'] == 'sync-failover' }
-            .inject([]) do |infos, item|
-              m = if item&.dig('devicesReference')&.dig('link')
+          cond = Proc.new { |item| item['type'] == 'sync-failover' }
+          select_map(URI.join(Bim::BASE_URL, Bim::Action::Meta::DEVICE_GROUP_PATH), cond) do |item|
+            m = if item&.dig('devicesReference')&.dig('link')
                     uri_r = URI.parse(item['devicesReference']['link'].sub('localhost', BIGIP_HOST))
                     JSON.parse(get_body(uri_r))['items'].map { |item_in| item_in['name'] }
-                  end
-              infos.push(name: item['name'], members: m)
-            end.to_json
+                end
+            { name: item['name'], members: m }
+          end
         end
       end
     end

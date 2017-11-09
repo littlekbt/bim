@@ -5,42 +5,31 @@ module Bim
       extend Bim::Util
 
       NODE_PATH = '/mgmt/tm/ltm/node'.freeze
+      NODE_URI = URI.join(Bim::BASE_URL, Bim::Action::Node::NODE_PATH)
 
       class << self
         def ls
-          uri = URI.join(Bim::BASE_URL, Bim::Action::Node::NODE_PATH)
-          JSON
-            .parse(get_body(uri))['items']
-            .inject([]) do |infos, item|
-              infos.push(name: item['name'], address: item['address'])
-            end.to_json
+          map(NODE_URI) do |item|
+            {name: item['name'], address: item['address']}
+          end
         end
 
         def detail(name)
-          uri = URI.join(Bim::BASE_URL, Bim::Action::Node::NODE_PATH)
-          JSON
-            .parse(get_body(uri))['items']
-            .select{|d| d['name'] == name}
-            .first
-            .to_json
+          specify(NODE_URI) { |d| d['name'] == name }
         end
 
         def create(name, address)
-          uri = URI.join(Bim::BASE_URL, Bim::Action::Node::NODE_PATH)
-          j = {'name' => name,
-               'address' => address,
-              }.to_json
-
-          req = request(uri, Bim::AUTH, 'application/json', 'POST', j)
-
-          http(uri).request(req).body
+          post(
+            NODE_URI,
+            {'name' => name, 'address' => address}.to_json
+          )
         end
 
         def delete(name)
           self_link = JSON.parse(detail(name))&.fetch('selfLink')
           return "not found #{name} node" if self_link.nil?
-          msg = "you want to delete #{name} node? [y|n]"
-          return "cancel delete #{name} node" unless yes_or_no?(msg)
+          return "cancel delete #{name} node" unless yes_or_no?("you want to delete #{name} node? [y|n]")
+
           uri = URI(self_link.sub('localhost', Bim::BIGIP_HOST))
           req = request(uri, Bim::AUTH, 'application/json', 'DELETE')
           msg = http(uri).request(req).body

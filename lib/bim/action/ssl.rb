@@ -13,33 +13,27 @@ module Bim
       VS_PATH = '/mgmt/tm/ltm/virtual'.freeze
       CRT_FILES_PATH = '/mgmt/tm/sys/file/sslCert'.freeze
       CRT_PROFILES_PATH = '/mgmt/tm/ltm/profile/client-ssl'.freeze
+      CRT_FILES_URI = URI.join(Bim::BASE_URL, Bim::Action::SSL::CRT_FILES_PATH)
+      CRT_PROFILES_URI = URI.join(Bim::BASE_URL, Bim::Action::SSL::CRT_PROFILES_PATH)
 
       class << self
         def bundles
-          uri = URI.join(Bim::BASE_URL, Bim::Action::SSL::CRT_FILES_PATH)
-          JSON
-            .parse(get_body(uri))['items']
-            .select { |item| item['isBundle'] == 'true' }
-            .map do |item|
-              { 'name' => item['name'].split('.')[0...-1].join('.') }
-            end.to_json
+          cond = Proc.new { |item| item['isBundle'] == 'true' }
+          select_map(CRT_FILES_URI, cond) do |item|
+            { 'name' => item['name'].split('.')[0...-1].join('.') }
+          end
         end
 
         def profiles
-          uri = URI.join(Bim::BASE_URL, Bim::Action::SSL::CRT_PROFILES_PATH)
-          JSON.parse(get_body(uri))['items'].map do |item|
+          map(CRT_PROFILES_URI) do |item|
             { 'name' => item['name'], 'fullPath' => item['fullPath'], 'key' => item['key'], 'chain' => item['chain'] }
-          end.to_json
+          end
         end
 
         def detail(profile_name)
-          uri = URI.join(Bim::BASE_URL, Bim::Action::SSL::CRT_PROFILES_PATH)
-          JSON
-            .parse(get_body(uri))['items']
-            .select { |item| item['name'] == profile_name || item['fullPath'] == profile_name }
-            .map do |item|
-            { 'name' => item['name'], 'fullPath' => item['fullPath'], 'key' => item['key'], 'chain' => item['chain'] }
-          end.to_json
+          specify(CRT_PROFILES_URI) do |item|
+            item['name'] == profile_name || item['fullPath'] == profile_name
+          end
         end
 
         def upload(filepath)
@@ -117,9 +111,7 @@ module Bim
 
         def update_profiles(link, names)
           uri = URI.parse(link.sub('localhost', BIGIP_HOST))
-          req = request(uri, Bim::AUTH, 'application/json', 'PATCH', { profiles: names }.to_json)
-
-          http(uri).request(req)
+          post(uri, { profiles: names }.to_json)
         end
 
         def output_msg(vs_name, old_names, new_names)
