@@ -2,10 +2,12 @@ AllCops:
   TargetRubyVersion: 2.4
 
 Metrics/AbcSize:
-  Max: 25
+  Max: 30
 
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - 'lib/bim/subcommands/*'
 
 Metrics/ClassLength:
   Max: 120
