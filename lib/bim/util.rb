@@ -88,6 +88,13 @@ module Bim
       body ? http(uri).request(req).body : http(uri).request(req)
     end
 
+    def self_patch(name,list_uri, j)
+      self_link = sub_localhost(specify_link(list_uri) { |item| item['name'] == name })
+      uri = URI(self_link)
+      req = request(uri, Bim::AUTH, 'application/json', 'PATCH', j)
+      http(uri).request(req).body
+    end
+
     def vs_list
       uri = URI.join(BASE_URL, VS_PATH)
       get_body(uri)
