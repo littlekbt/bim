@@ -35,7 +35,7 @@ module Bim
       end
 
       desc(
-        'change_nf [VS_NAME] [NETWORK_FIREWALL_NAME]',
+        'change_nf [VS_NAME] [NETWORK_FIREWALL_FULLPATH]',
         'change network firewall policy'
       )
       def change_nf(name, nf_name)
@@ -43,7 +43,7 @@ module Bim
       end
 
       desc(
-        'change_pool [NAME] [POOL_NAME]',
+        'change_pool [NAME] [POOL_FULLPATH]',
         'change pool'
       )
       def change_pool(name, pool_name)
