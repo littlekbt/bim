@@ -75,9 +75,17 @@ module Bim
         .to_json
     end
 
-    def post(uri, _json)
+    def specify_link(uri, key = ['selfLink'], &block)
+      JSON
+        .parse(get_body(uri))['items']
+        .select(&block)
+        .first
+        .dig(*key)
+    end
+
+    def post(uri, j, body = true)
       req = request(uri, Bim::AUTH, 'application/json', 'POST', j)
-      http(uri).request(req).body
+      body ? http(uri).request(req).body : http(uri).request(req)
     end
 
     def vs_list
@@ -88,6 +96,10 @@ module Bim
     def profiles(link)
       uri = URI.parse(link.sub('localhost', BIGIP_HOST))
       get_body(uri)
+    end
+
+    def sub_localhost(url)
+      url.sub('localhost', BIGIP_HOST)
     end
   end
 end
