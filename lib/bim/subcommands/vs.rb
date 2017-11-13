@@ -30,7 +30,7 @@ module Bim
         'update_snat [NAME] [SNAT_ADDRESS] [BIT_MASK]',
         'update snat configuration'
       )
-      def update_dnat(name, snat_addr, bit_mask)
+      def update_snat(name, snat_addr, bit_mask)
         puts Bim::Action::VS.update_snat(name, snat_addr, bit_mask)
       end
 
