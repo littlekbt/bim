@@ -4,7 +4,7 @@ module Bim
     class Meta < Thor
       desc(
         'actives',
-        'output active host'
+        'output active hosts'
       )
       def actives
         puts Bim::Action::Meta.actives
@@ -12,7 +12,7 @@ module Bim
 
       desc(
         'device_groups',
-        'output device group'
+        'output device groups'
       )
       def device_groups
         puts Bim::Action::Meta.device_groups

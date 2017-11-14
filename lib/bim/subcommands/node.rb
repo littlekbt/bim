@@ -4,22 +4,22 @@ module Bim
     class Node < Thor
       desc(
         'ls',
-        'node list'
+        'output node list'
       )
       def ls
         puts Bim::Action::Node.ls
       end
 
       desc(
-        'detail [name]',
-        'node detail'
+        'detail [NAME]',
+        'output node detail'
       )
       def detail(name)
         puts Bim::Action::Node.detail(name)
       end
 
       desc(
-        'create [name] [address]',
+        'create [NAME] [ADDRESS]',
         'create node'
       )
       def create(name, address)
@@ -27,7 +27,7 @@ module Bim
       end
 
       desc(
-        'delete [name]',
+        'delete [NAME]',
         'delete node'
       )
       def delete(name)
