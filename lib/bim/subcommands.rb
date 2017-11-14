@@ -5,6 +5,7 @@ require 'bim/subcommands/ssl'
 require 'bim/subcommands/vs'
 require 'bim/subcommands/node'
 require 'bim/subcommands/pool'
+require 'bim/subcommands/fw'
 
 module Bim
   # Subcommands module is namespace
