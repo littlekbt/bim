@@ -4,7 +4,7 @@ module Bim
     class Node < Thor
       desc(
         'ls',
-        'node list'
+        'output node list'
       )
       def ls
         puts Bim::Action::Node.ls
@@ -12,7 +12,7 @@ module Bim
 
       desc(
         'detail [NAME]',
-        'node detail'
+        'output node detail'
       )
       def detail(name)
         puts Bim::Action::Node.detail(name)

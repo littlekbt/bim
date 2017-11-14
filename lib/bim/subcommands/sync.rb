@@ -15,7 +15,7 @@ module Bim
 
       desc(
         'state',
-        'get sync state'
+        'output sync state'
       )
       def state
         puts Bim::Action::Sync.state
@@ -23,7 +23,7 @@ module Bim
 
       desc(
         'failover_state',
-        'get failover state'
+        'output failover state'
       )
       def failover_state
         puts Bim::Action::Sync.failover_state
