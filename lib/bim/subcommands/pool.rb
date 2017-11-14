@@ -11,7 +11,7 @@ module Bim
       end
 
       desc(
-        'create [name] [members(optional: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')]',
+        'create [NAME] [MEMBERS(optional: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')]',
         'create pool with node members'
       )
       def create(name, members = nil)
@@ -19,7 +19,7 @@ module Bim
       end
 
       desc(
-        'members',
+        'members [NAME]',
         'output members belongs to pool'
       )
       def members(name)
@@ -27,7 +27,7 @@ module Bim
       end
 
       desc(
-        'drop name members(NodeName:Port)',
+        'drop [NAME] [MEMBERS(NodeName:Port)]',
         'drop node members (members are variable length)'
       )
       def drop(name, *members)
@@ -35,7 +35,7 @@ module Bim
       end
 
       desc(
-        'add name members(NodeName:Port)',
+        'add [NAME] [MEMBERS(NodeName:Port)]',
         'add node members (members aer variable length)'
       )
       def add(name, *members)

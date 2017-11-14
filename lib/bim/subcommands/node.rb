@@ -11,7 +11,7 @@ module Bim
       end
 
       desc(
-        'detail [name]',
+        'detail [NAME]',
         'node detail'
       )
       def detail(name)
@@ -19,7 +19,7 @@ module Bim
       end
 
       desc(
-        'create [name] [address]',
+        'create [NAME] [ADDRESS]',
         'create node'
       )
       def create(name, address)
@@ -27,7 +27,7 @@ module Bim
       end
 
       desc(
-        'delete [name]',
+        'delete [NAME]',
         'delete node'
       )
       def delete(name)
