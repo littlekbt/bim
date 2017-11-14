@@ -13,7 +13,8 @@ module Bim
             {
               'name': item['name'],
               'translation': item['translation'],
-              'address_list': item['origins'].map { |origin| origin['name'] }
+              'address_list': item['origins'].map { |origin| origin['name'] },
+              'vlans': item['vlans']
             }
           end
         end
