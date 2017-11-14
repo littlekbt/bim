@@ -22,13 +22,8 @@ module Bim
           specify(VS_URI) { |d| d['name'] == name }
         end
 
-        def update_dnat(name, dnat_addr, port)
+        def update_global_address(name, dnat_addr, port)
           j = { 'destination' => "#{dnat_addr}:#{port}" }.to_json
-          self_patch(name, VS_URI, j)
-        end
-
-        def update_snat(name, snat_addr, bitmask)
-          j = { 'source' => "#{snat_addr}/#{bitmask}" }.to_json
           self_patch(name, VS_URI, j)
         end
 
