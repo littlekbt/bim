@@ -6,6 +6,7 @@ require 'bim/action/vs'
 require 'bim/action/node'
 require 'bim/action/pool'
 require 'bim/action/fw'
+require 'bim/action/snat'
 
 module Bim
   # Action module is namespace
