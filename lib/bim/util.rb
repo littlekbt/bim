@@ -83,6 +83,10 @@ module Bim
         .dig(*key)
     end
 
+    def specify_link_by_name(uri, name, key = ['selfLink'])
+      specify_link(uri, key) { |item| item['name'] == name }
+    end
+
     def post(uri, j, body = true)
       req = request(uri, Bim::AUTH, 'application/json', 'POST', j)
       body ? http(uri).request(req).body : http(uri).request(req)
