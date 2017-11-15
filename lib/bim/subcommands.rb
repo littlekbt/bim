@@ -6,6 +6,7 @@ require 'bim/subcommands/vs'
 require 'bim/subcommands/node'
 require 'bim/subcommands/pool'
 require 'bim/subcommands/fw'
+require 'bim/subcommands/snat'
 
 module Bim
   # Subcommands module is namespace
