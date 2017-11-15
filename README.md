@@ -77,10 +77,10 @@ $ bim meta device_groups
 $ bim vs list
 
 # output one of the virtual server list
-$ bim vs detail Virtual_Server_Name
+$ bim vs detail VS_Name
 
 # update global ip address
-$ bim vs update_global_address Virtual_Server_Name GLOBAL_IPADDRESS PORT
+$ bim vs update_global_address VS_Name GLOBAL_IPADDRESS PORT
 
 # change firewall policy 
 $ bim vs change_nf VS_NAME NETWORK_FIREWALL_FULLPATH
