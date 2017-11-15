@@ -34,48 +34,46 @@ module Bim
 
       desc(
         'members [NAME]',
-        'output members belongs to pool'
+        'output members belongs pool'
       )
       def members(name)
         puts Bim::Action::Pool.members(name)
       end
 
       desc(
-        'enable [NAME] [MEMBERS(NodeName:Port)]',
+        'enable [NAME] [--members=NodeName:Port NodeName:Port]',
         'enable node members (members are variable length)'
       )
-      def enable(name, *members)
-        puts Bim::Action::Pool.enable(name, members)
+      option :members, required: true, type: :array
+      def enable(name)
+        puts Bim::Action::Pool.enable(name, options[:members])
       end
 
       desc(
-        'disable [NAME] [MEMBERS(NodeName:Port)]',
+        'disable [NAME] [--members=NodeName:Port NodeName:Port]',
         'disable node members (members are variable length)'
       )
-      def disable(name, *members)
-        puts Bim::Action::Pool.disable(name, members)
+      option :members, required: true, type: :array
+      def disable(name)
+        puts Bim::Action::Pool.disable(name, options[:members])
       end
 
       desc(
-        'update_health_check ',
-        'update health check configuration'
-      )
-      def update_health_check; end
-
-      desc(
-        'drop [NAME] [MEMBERS(NodeName:Port)]',
-        'drop node members (members are variable length)'
-      )
-      def drop(name, *members)
-        puts Bim::Action::Pool.drop_members(name, members)
-      end
-
-      desc(
-        'add [NAME] [MEMBERS(NodeName:Port)]',
+        'add [NAME] [--members=NodeName:Port NodeName:Port]',
         'add node members (members aer variable length)'
       )
-      def add(name, *members)
-        puts Bim::Action::Pool.add_members(name, members)
+      option :members, required: true, type: :array
+      def add(name)
+        puts Bim::Action::Pool.add_members(name, options[:members])
+      end
+
+      desc(
+        'drop [NAME] [--members=NodeName:Port NodeName:Port]',
+        'drop node members (members are variable length)'
+      )
+      option :members, required: true, type: :array
+      def drop(name)
+        puts Bim::Action::Pool.drop_members(name, options[:members])
       end
     end
   end
