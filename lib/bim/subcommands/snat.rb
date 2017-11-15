@@ -41,19 +41,21 @@ module Bim
       end
 
       desc(
-        'add_address [NAME] [ADDRESSES(Address/Mask)]',
+        'add_address [NAME] [--addresses=IPADDR/Mask IPADDR/Mask]',
         'add address for SNAT (ADDRESSES are variable length)'
       )
-      def add_address(name, *addresses)
-        puts Bim::Action::Snat.add_address(name, addresses)
+      option :addresses, required: true, type: :array
+      def add_address(name)
+        puts Bim::Action::Snat.add_address(name, options[:addresses])
       end
 
       desc(
-        'remove_address [NAME] [ADDRESSES]',
+        'remove_address [NAME] [--addresses=IPADDR/Mask IPADDR/Mask]',
         'remove address for SNAT (ADDRESSES are variable length)'
       )
+      option :addresses, required: true, type: :array
       def remove_address(name, *addresses)
-        puts Bim::Action::Snat.remove_address(name, addresses)
+        puts Bim::Action::Snat.remove_address(name, options[:addresses])
       end
     end
   end
