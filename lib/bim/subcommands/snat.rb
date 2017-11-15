@@ -54,7 +54,7 @@ module Bim
         'remove address for SNAT (ADDRESSES are variable length)'
       )
       option :addresses, required: true, type: :array
-      def remove_address(name, *addresses)
+      def remove_address(name)
         puts Bim::Action::Snat.remove_address(name, options[:addresses])
       end
     end
