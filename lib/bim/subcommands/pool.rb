@@ -14,8 +14,8 @@ module Bim
         'create [NAME]',
         'create pool with node members'
       )
-      option :monitor
-      option :slow_ramp_time
+      option :monitor, desc: 'monitor expects string(ex: \'http\', \'http and https\')'
+      option :slow_ramp_time, desc: 'slow_ramp_time expects integer'
       option :members, desc: 'members expects json array(members: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')'
       def create(name)
         puts Bim::Action::Pool.create(name, options[:monitor], options[:slow_ramp_time], options[:members])
@@ -25,8 +25,8 @@ module Bim
         'update [NAME]',
         'update pool with node members'
       )
-      option :monitor
-      option :slow_ramp_time
+      option :monitor, desc: 'monitor expects string(ex: \'http\', \'http and https\')'
+      option :slow_ramp_time, desc: 'slow_ramp_time expects integer'
       option :members, desc: 'members expects json array(members: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')'
       def update(name)
         puts Bim::Action::Pool.update(name, options[:monitor], options[:slow_ramp_time], options[:members])
