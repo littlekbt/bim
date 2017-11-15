@@ -19,41 +19,43 @@ module Bim
       end
 
       desc(
-        'create [NAME] [--translation=IPADDR] [--address_list=IPADDR/Mask IPADDR/Mask] [--vlans=VLAN1 VLAN2]',
+        'create [NAME]',
         'create SNAT'
       )
       option :vlans, type: :array
       option :translation, required: true
-      option :address_list, required: true, type: :array
+      option :address_list, required: true, type: :array, desc: 'address_list expects CIDR format(IPADDR/Mask)'
       def create(name)
         puts Bim::Action::Snat.create(name, options[:translation], options[:address_list], options[:vlans])
       end
 
       desc(
-        'update [NAME] [--translation=IPADDR] [--address_list=IPADDR/Mask IPADDR/Mask] [--vlans=VLAN1 VLAN2]',
+        'update [NAME]',
         'update SNAT'
       )
       option :vlans, type: :array
       option :translation, required: true
-      option :address_list, required: true, type: :array
+      option :address_list, required: true, type: :array, desc: 'address_list expects CIDR format(IPADDR/Mask)'
       def update(name)
         puts Bim::Action::Snat.update(name, options[:translation], options[:address_list], options[:vlans])
       end
 
       desc(
-        'add_address [NAME] [ADDRESSES(Address/Mask)]',
-        'add address for SNAT (ADDRESSES are variable length)'
+        'add_address [NAME]',
+        'add address for SNAT'
       )
-      def add_address(name, *addresses)
-        puts Bim::Action::Snat.add_address(name, addresses)
+      option :addresses, required: true, type: :array, desc: 'addresses expects CIDR format(IPADDR/Mask)'
+      def add_address(name)
+        puts Bim::Action::Snat.add_address(name, options[:addresses])
       end
 
       desc(
-        'remove_address [NAME] [ADDRESSES]',
-        'remove address for SNAT (ADDRESSES are variable length)'
+        'remove_address [NAME]',
+        'remove address for SNAT'
       )
-      def remove_address(name, *addresses)
-        puts Bim::Action::Snat.remove_address(name, addresses)
+      option :addresses, required: true, type: :array, desc: 'addresses expects CIDR format(IPADDR/Mask)'
+      def remove_address(name)
+        puts Bim::Action::Snat.remove_address(name, options[:addresses])
       end
     end
   end

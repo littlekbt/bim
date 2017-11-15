@@ -11,71 +11,69 @@ module Bim
       end
 
       desc(
-        'create [NAME] [MEMBERS(optional: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')]',
+        'create [NAME]',
         'create pool with node members'
       )
       option :monitor
       option :slow_ramp_time
-      option :members
+      option :members, desc: 'members expects json array(members: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')'
       def create(name)
         puts Bim::Action::Pool.create(name, options[:monitor], options[:slow_ramp_time], options[:members])
       end
 
       desc(
-        'update [NAME] [MEMBERS(optional: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')]',
-        'update pool configration'
+        'update [NAME]',
+        'update pool with node members'
       )
       option :monitor
       option :slow_ramp_time
-      option :members
+      option :members, desc: 'members expects json array(members: \'[{"name": "NodeName:Port", "address": "NodeAddress"}, {"name": "NodeName:Port", "address": "NodeAddress"}]\')'
       def update(name)
         puts Bim::Action::Pool.update(name, options[:monitor], options[:slow_ramp_time], options[:members])
       end
 
       desc(
         'members [NAME]',
-        'output members belongs to pool'
+        'output members belongs pool'
       )
       def members(name)
         puts Bim::Action::Pool.members(name)
       end
 
       desc(
-        'enable [NAME] [MEMBERS(NodeName:Port)]',
-        'enable node members (members are variable length)'
+        'enable [NAME]',
+        'enable node members'
       )
-      def enable(name, *members)
-        puts Bim::Action::Pool.enable(name, members)
+      option :members, required: true, type: :array, desc: 'members expects NodeName:Port format'
+      def enable(name)
+        puts Bim::Action::Pool.enable(name, options[:members])
       end
 
       desc(
-        'disable [NAME] [MEMBERS(NodeName:Port)]',
-        'disable node members (members are variable length)'
+        'disable [NAME]',
+        'disable node members'
       )
-      def disable(name, *members)
-        puts Bim::Action::Pool.disable(name, members)
+      option :members, required: true, type: :array, desc: 'members expects NodeName:Port format'
+      def disable(name)
+        puts Bim::Action::Pool.disable(name, options[:members])
       end
 
       desc(
-        'update_health_check ',
-        'update health check configuration'
+        'add [NAME]',
+        'add node members'
       )
-      def update_health_check; end
-
-      desc(
-        'drop [NAME] [MEMBERS(NodeName:Port)]',
-        'drop node members (members are variable length)'
-      )
-      def drop(name, *members)
-        puts Bim::Action::Pool.drop_members(name, members)
+      option :members, required: true, type: :array, desc: 'members expects NodeName:Port format'
+      def add(name)
+        puts Bim::Action::Pool.add_members(name, options[:members])
       end
 
       desc(
-        'add [NAME] [MEMBERS(NodeName:Port)]',
-        'add node members (members aer variable length)'
+        'drop [NAME]',
+        'drop node members'
       )
-      def add(name, *members)
-        puts Bim::Action::Pool.add_members(name, members)
+      option :members, required: true, type: :array, desc: 'members expects NodeName:Port format'
+      def drop(name)
+        puts Bim::Action::Pool.drop_members(name, options[:members])
       end
     end
   end
