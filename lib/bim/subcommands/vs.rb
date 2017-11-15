@@ -19,19 +19,11 @@ module Bim
       end
 
       desc(
-        'update_dnat [NAME] [DNAT_ADDRESS] [PORT]',
-        'update dnat configuration'
+        'update_global_address [NAME] [GLOBAL_ADDRESS] [PORT]',
+        'update global ip address'
       )
-      def update_dnat(name, dnat_addr, port)
-        puts Bim::Action::VS.update_dnat(name, dnat_addr, port)
-      end
-
-      desc(
-        'update_snat [NAME] [SNAT_ADDRESS] [BIT_MASK]',
-        'update snat configuration'
-      )
-      def update_snat(name, snat_addr, bit_mask)
-        puts Bim::Action::VS.update_snat(name, snat_addr, bit_mask)
+      def update_global_address(name, global_addr, port)
+        puts Bim::Action::VS.update_global_address(name, global_addr, port)
       end
 
       desc(
