@@ -78,6 +78,15 @@ $ bim vs list
 
 # output one of the virtual server list
 $ bim vs detail Virtual_Server_Name
+
+# update global ip address
+$ bim vs update_global_address Virtual_Server_Name GLOBAL_IPADDRESS PORT
+
+# change firewall policy 
+$ bim vs change_nf VS_NAME NETWORK_FIREWALL_FULLPATH
+
+# change pool
+$ bim vs change_pool VS_NAME POOL_FULLPATH
 ```
 
 #### Sync
@@ -100,7 +109,7 @@ $ bim ssl bundles
 $ bim ssl profiles
 
 # output specified ssl profile
-$ bim ssl detail SSL Profile Name
+$ bim ssl detail SSL_Profile_Name
 
 # upload and create_ssl_profile and replace.
 $ bim ssl deploy OLD_SSL_PROFILE_NAME NEW_SSL_PROFILE_NAME PRIVATE_KEYFILE CERTIFICATE_FILE CHAIN
@@ -125,6 +134,83 @@ $ bim ssl replace OLD_SSL_PROFILE_NAME NEW_SSL_PROFILE_NAME
 
 # can use `--test` option the same as deploy.
 $ TEST_VS=test_virtual_server bim replace OLD_SSL_PROFILE_NAME NEW_SSL_PROFILE_NAME --test
+```
+
+#### Firewall
+
+```sh
+# output firewall policy list
+$ bim fw ls
+
+# output firewall detail configuration
+$ bim fw detail FIREWALL_POLICY_NAME
+```
+
+#### Node
+
+```sh
+# output node list
+$ bim node ls
+
+# output node detail
+$ bim node detail NODE_NAME
+
+# create node
+$ bim node create NODE_NAME IP_ADDRESS
+
+# delete node
+$ bim node delete NODE_NAME
+```
+
+#### Pool
+
+```sh
+# output pool list
+$ bim pool ls
+
+# output members belongs pool
+$ bim pool members POOL_NAME
+
+# create pool
+$ bim pool create POOL_NAME [--monitor='monitor name'] [--slow-ramp-time=interger] [--members='[{"name": "NodeName:PORT", "address": "NodeAddress"}, {"name": "NodeName:PORT", "address": "NodeAddress"}]']
+
+# update pool
+$ bim pool update POOL_NAME [--monitor='monitor name'] [--slow-ramp-time=interger] [--members='[{"name": "NodeName:PORT", "address": "NodeAddress"}, {"name": "NodeName:PORT", "address": "NodeAddress"}]']
+
+# enable members 
+$ bim pool enable POOL_NAME --members=IP_ADDRESS:PORT IP_ADDRESS:PORT
+
+# disable members 
+$ bim pool disable POOL_NAME --members=IP_ADDRESS:PORT IP_ADDRESS:PORT
+
+# add members
+$ bim pool add POOL_NAME --members=NODENAME:PORT NODENAME:PORT
+
+# drop members
+$ bim pool drop POOL_NAME --members=NODENAME:PORT NODENAME:PORT
+```
+
+#### Snat
+
+```sh
+# output snat list
+$ bim snat ls
+
+# output snat configuration
+$ bim snat detail SNAT_NAME
+
+# create snat
+$ bim snat create SNAT_NAME --translation=GLOBAL_IPADDRESS --addresses=IPADDRESS/MASK IPADDRESS/MASK --vlans=VLAN1 VLAN2
+# ※ if not set vlans, set false to vlanEnabled and ALL* to vlans.
+
+# update snat
+$ bim snat update SNAT_NAME --translation=GLOBAL_IPADDRESS --addresses=IPADDRESS/MASK IPADDRESS/MASK --vlans=VLAN1 VLAN2
+
+# add address
+$ bim add_address SNAT_NAME --addresses=IPADDRESS/MASK IPADDRESS/MASK
+
+# remove address
+$ bim remove_address SNAT_NAME --addresses=IPADDRESS/MASK IPADDRESS/MASK
 ```
 
 ## License
