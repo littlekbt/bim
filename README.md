@@ -35,23 +35,7 @@ if you want to use `--test` option, set TEST_VS vriable.
 - `TEST_VS`: set test virtual server
 
 ## Features
-There are many features for deployment SSL Certificate from CLI to BIGIP.
-
-#### Metadata
-- get active host in the device group  
-- get group name that BIGIP_HOST belongs
-
-#### Virtual Server
-- get virutal server list and detail configuration
-
-#### Sync
-- execute sync action  
-- get sync state
-
-#### SSL
-- upload key and certificate  
-- create ssl client profile  
-- replace old ssl client profile to new ssl client profile
+There are many features to help BIG_IP operation.
 
 ## Usage
 
